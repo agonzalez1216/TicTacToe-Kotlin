@@ -1,8 +1,43 @@
 package tictactoe
+/*
 const val XWINS = "X X X"
 const val OWINS = "O O O"
 const val space = ' '
+*/
+private var board = Board(0)
+private val player1 = "X"
+private val player2 = "O"
+private var currentPlayer = ""
+private val validRange = 1..3
 fun main() {
+    board = Board(3)
+    board.printBoard()
+    takeTurns()
+    while (!board.isGameOver) {
+        println("$currentPlayer's turn")
+        println("Enter the coordinates: ")
+        var (a, b) = readLine()!!.split(' ').map { it.toIntOrNull() }
+        if (a == null || b == null) {
+            println("You should enter numbers!")
+        } else if (a in validRange && b in validRange) {
+            a--
+            b--
+            board.placePiece(a, b, currentPlayer)
+            takeTurns()
+        }  else {
+            println("Coordinates should be from 1 to 3!")
+        }
+    }
+}
+
+fun takeTurns(){
+    currentPlayer = if(player1 == currentPlayer){
+        player2
+    } else {
+        player1
+    }
+}
+/*
     var xWins = false
     var oWins = false
     val validRange = 1..3
@@ -85,5 +120,6 @@ fun main() {
     } else {
         print("Draw")
     }
-}
+ */
+
 
